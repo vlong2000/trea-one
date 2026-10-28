@@ -66,6 +66,34 @@ func Handle(ctx context.Context, conn net.Conn, mapper *mapping.Table)
 
 读取 Request Line、Lookup、以 CRLF 写回。EOF、网络错误、超长行时关闭连接。`ctx` 取消时关闭 `conn`。
 
+## NRF CLI
+
+进程入口：`nfs/nrf/cmd`
+
+| 参数 | 缺省 | 约束 |
+|------|------|------|
+| `-c` / `--config` | `./config/nrfcfg.yaml` | YAML 路径；缺失或非法则非零退出 |
+
+```bash
+make nrf
+./bin/nrf -c config/nrfcfg.yaml
+```
+
+默认监听 `http://127.0.0.1:8000`。
+
+## NRF SBI
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/bootstrapping` | 返回 OPERATIVE 状态 |
+| PUT | `/nnrf-nfm/v1/nf-instances/{id}` | 注册或更新 NF Profile；新建 201，更新 200 |
+| GET | `/nnrf-nfm/v1/nf-instances/{id}` | 查询单个 Profile；不存在 404 |
+| DELETE | `/nnrf-nfm/v1/nf-instances/{id}` | 注销；成功 204 |
+| GET | `/nnrf-nfm/v1/nf-instances` | 列表，可选 `nf-type` |
+| GET | `/nnrf-disc/v1/nf-instances` | 发现，必填 `target-nf-type` 与 `requester-nf-type` |
+
+注册体至少包含 `nfType`、`nfStatus`。Profile 存于进程内存，不使用 MongoDB。
+
 ## Mapping File
 
 缺省路径：`configs/mapping.txt`

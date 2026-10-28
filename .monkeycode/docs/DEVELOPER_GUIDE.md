@@ -33,9 +33,10 @@ telnet 127.0.0.1 2323
 
 ```bash
 go test ./...
+go test -C nfs/nrf ./...
 ```
 
-测试覆盖 mapping 加载、session 行协议、server 并发与端口占用、CLI 非法参数。
+根模块测试覆盖 mapping、session、server 与 CLI。`nfs/nrf` 测试覆盖配置、内存存储、SBI 注册/发现与独立进程启动。
 
 ## 项目结构说明
 
@@ -44,6 +45,9 @@ go test ./...
 - `internal/session`：单连接协议
 - `internal/server`：监听与生命周期
 - `configs/mapping.txt`：缺省映射
+- `nfs/nrf`：独立 NRF module
+- `config/nrfcfg.yaml`：NRF 配置
+- `go.work`：聚合 workspace
 
 ## 开发规范
 

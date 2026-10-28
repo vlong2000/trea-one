@@ -29,13 +29,23 @@ mml-server 是一个基于 TELNET/TCP 的字符串应答服务。运维与联调
 ## 项目结构
 
 ```
-mml-server/
-├── cmd/mml-server/       # 进程入口与 CLI
-├── internal/mapping/     # 映射表加载与查询
-├── internal/session/     # 单连接行协议
-├── internal/server/      # TCP 监听与会话生命周期
-├── configs/mapping.txt   # 缺省映射文件
-└── go.mod
+trea-one/
+├── cmd/mml-server/       # mml-server 进程入口
+├── internal/mapping/
+├── internal/session/
+├── internal/server/
+├── configs/mapping.txt
+├── go.mod                # mml-server module
+├── go.work               # 聚合 Go workspace
+├── Makefile              # make nrf 构建独立二进制
+├── config/nrfcfg.yaml    # NRF 配置样例
+├── nfs/nrf/              # NRF 独立 Go module
+│   ├── cmd/main.go
+│   ├── pkg/factory/
+│   ├── pkg/service/
+│   ├── internal/store/
+│   └── internal/sbi/
+└── bin/nrf               # 构建产物
 ```
 
 **入口点**
@@ -71,6 +81,15 @@ mml-server/
 **依赖**: `internal/mapping`、`internal/session`
 **被依赖**: `cmd/mml-server`
 
+### nfs/nrf
+**目的**: 独立 NRF 进程，NF 注册、查询与发现
+**位置**: `nfs/nrf/`
+**关键文件**: `cmd/main.go`、`pkg/service/service.go`、`internal/sbi/server.go`、`internal/store/store.go`
+**依赖**: `gopkg.in/yaml.v3`
+**被依赖**: 无其他 NF 业务包；运行时仅通过 HTTP SBI 被其他网元调用
+
+NRF 以独立二进制 `bin/nrf` 运行，NF Profile 保存在进程内存中。SIGINT/SIGTERM 后停止本进程 HTTP 服务。不加载 AMF/SMF 等其他 NF 代码。
+
 ## 图表
 
 ```mermaid
@@ -105,4 +124,21 @@ sequenceDiagram
     Session->>Mapper: Lookup request
     Mapper-->>Session: response or ERROR unknown command
     Session-->>Client: response plus CRLF
+```
+
+```mermaid
+flowchart LR
+    OtherNF["Other NF Process"]
+    NrfBin["bin/nrf"]
+    Factory["nfs/nrf/pkg/factory"]
+    Svc["nfs/nrf/pkg/service"]
+    Sbi["nfs/nrf/internal/sbi"]
+    Mem["nfs/nrf/internal/store"]
+    Cfg["config/nrfcfg.yaml"]
+
+    Cfg --> Factory
+    NrfBin --> Svc
+    Svc --> Sbi
+    Sbi --> Mem
+    OtherNF -->|"HTTP SBI"| Sbi
 ```
