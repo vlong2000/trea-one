@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 790" width="1200" height="790" role="img" aria-label="UERANSIM 模块结构图">
+  <style>
+    .bg { fill: #F7F7F8; }
+    .card { fill: #FFFFFF; stroke: #E4E4E7; stroke-width: 1; }
+    .card-dash { fill: #FFFFFF; stroke: #D4D4D8; stroke-width: 1; stroke-dasharray: 4 4; }
+    .focal { fill: #F2F7FF; stroke: #4B3FE3; stroke-width: 1.5; }
+    .title { fill: #171717; font-family: "PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif; font-size: 24px; font-weight: 600; }
+    .subtitle { fill: #71717A; font-family: "PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif; font-size: 13px; }
+    .layer { fill: #71717A; font-family: "PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif; font-size: 13px; font-weight: 500; }
+    .node { fill: #171717; font-family: "PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif; font-size: 16px; font-weight: 500; }
+    .node-sm { fill: #171717; font-family: "PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif; font-size: 15px; font-weight: 500; }
+    .desc { fill: #52525B; font-family: "PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif; font-size: 12px; }
+    .desc-brand { fill: #3C2ECA; font-family: "PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif; font-size: 12px; }
+    .chip { fill: #F4F4F5; stroke: #E4E4E7; stroke-width: 1; }
+    .chip-t { fill: #3F3F46; font-family: "SF Mono","JetBrains Mono",ui-monospace,Menlo,Consolas,monospace; font-size: 12px; }
+    .arrow { stroke: #A1A1AA; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .foot { fill: #71717A; font-family: "PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif; font-size: 12px; }
+  </style>
+
+  <defs>
+    <marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M1 1 L7 4 L1 7 Z" fill="#A1A1AA"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1200" height="790"/>
+
+  <text class="title" x="40" y="52">UERANSIM 模块结构</text>
+  <text class="subtitle" x="40" y="78">v3.3.0 · 4f45e18 · 四层结构：可执行程序 / 网元库 / 公共库 / 基础库</text>
+
+  <!-- ① 可执行程序 -->
+  <text class="layer" x="40" y="116">① 可执行程序</text>
+
+  <rect class="card" x="40" y="130" width="180" height="64" rx="12"/>
+  <text class="node-sm" x="130" y="158" text-anchor="middle">nr-gnb</text>
+  <text class="desc" x="130" y="179" text-anchor="middle">gNB 进程</text>
+
+  <rect class="card" x="250" y="130" width="180" height="64" rx="12"/>
+  <text class="node-sm" x="340" y="158" text-anchor="middle">nr-ue</text>
+  <text class="desc" x="340" y="179" text-anchor="middle">UE 进程</text>
+
+  <rect class="card" x="460" y="130" width="180" height="64" rx="12"/>
+  <text class="node-sm" x="550" y="158" text-anchor="middle">nr-cli</text>
+  <text class="desc" x="550" y="179" text-anchor="middle">控制命令行</text>
+
+  <rect class="card" x="670" y="130" width="240" height="64" rx="12"/>
+  <text class="node-sm" x="790" y="158" text-anchor="middle">nr-binder</text>
+  <text class="desc" x="790" y="179" text-anchor="middle">libdevbnd.so（LD_PRELOAD）</text>
+
+  <rect class="card-dash" x="940" y="130" width="220" height="64" rx="12"/>
+  <text class="node-sm" x="1050" y="158" text-anchor="middle">config/*.yaml</text>
+  <text class="desc" x="1050" y="179" text-anchor="middle">gNB / UE 配置输入</text>
+
+  <!-- arrows row1 -> row2 -->
+  <path class="arrow" d="M250 194 V240" marker-end="url(#ar)"/>
+  <path class="arrow" d="M710 194 V240" marker-end="url(#ar)"/>
+  <path class="arrow" d="M1060 194 V240" marker-end="url(#ar)"/>
+
+  <!-- ② 网元库 -->
+  <text class="layer" x="40" y="228">② 网元库</text>
+
+  <rect class="card" x="40" y="240" width="540" height="166" rx="12"/>
+  <text class="node" x="64" y="274">gNB</text>
+  <text class="desc" x="64" y="296">6 个 NTS 任务</text>
+  <rect class="chip" x="64" y="316" width="52" height="26" rx="13"/>
+  <text class="chip-t" x="90" y="334" text-anchor="middle">app</text>
+  <rect class="chip" x="128" y="316" width="60" height="26" rx="13"/>
+  <text class="chip-t" x="158" y="334" text-anchor="middle">sctp</text>
+  <rect class="chip" x="200" y="316" width="60" height="26" rx="13"/>
+  <text class="chip-t" x="230" y="334" text-anchor="middle">ngap</text>
+  <rect class="chip" x="272" y="316" width="54" height="26" rx="13"/>
+  <text class="chip-t" x="299" y="334" text-anchor="middle">rrc</text>
+  <rect class="chip" x="338" y="316" width="54" height="26" rx="13"/>
+  <text class="chip-t" x="365" y="334" text-anchor="middle">gtp</text>
+  <rect class="chip" x="404" y="316" width="54" height="26" rx="13"/>
+  <text class="chip-t" x="431" y="334" text-anchor="middle">rls</text>
+  <text class="desc" x="64" y="374">N2 控制面 + N3 用户面 + 模拟空口</text>
+
+  <rect class="card" x="620" y="240" width="540" height="166" rx="12"/>
+  <text class="node" x="644" y="274">UE</text>
+  <text class="desc" x="644" y="296">4 个常驻任务 + 每会话 TUN</text>
+  <rect class="chip" x="644" y="316" width="52" height="26" rx="13"/>
+  <text class="chip-t" x="670" y="334" text-anchor="middle">app</text>
+  <rect class="chip" x="708" y="316" width="52" height="26" rx="13"/>
+  <text class="chip-t" x="734" y="334" text-anchor="middle">nas</text>
+  <rect class="chip" x="772" y="316" width="54" height="26" rx="13"/>
+  <text class="chip-t" x="799" y="334" text-anchor="middle">rrc</text>
+  <rect class="chip" x="838" y="316" width="54" height="26" rx="13"/>
+  <text class="chip-t" x="865" y="334" text-anchor="middle">rls</text>
+  <rect class="chip" x="904" y="316" width="54" height="26" rx="13"/>
+  <text class="chip-t" x="931" y="334" text-anchor="middle">tun</text>
+  <text class="desc" x="644" y="374">NAS 状态机 + TUN 用户面（每 PDU 会话一个实例）</text>
+
+  <!-- arrows row2 -> row3 -->
+  <path class="arrow" d="M250 406 V474" marker-end="url(#ar)"/>
+  <path class="arrow" d="M710 406 V474" marker-end="url(#ar)"/>
+  <path class="arrow" d="M1060 406 V474" marker-end="url(#ar)"/>
+
+  <!-- ③ 公共库 -->
+  <text class="layer" x="40" y="462">③ 公共库</text>
+
+  <rect class="card" x="40" y="474" width="1120" height="94" rx="12"/>
+  <text class="node" x="64" y="510">common-lib</text>
+  <text class="desc" x="64" y="532">gNB / UE 共享</text>
+  <rect class="chip" x="260" y="508" width="52" height="26" rx="13"/>
+  <text class="chip-t" x="286" y="526" text-anchor="middle">app</text>
+  <rect class="chip" x="324" y="508" width="48" height="26" rx="13"/>
+  <text class="chip-t" x="348" y="526" text-anchor="middle">asn</text>
+  <rect class="chip" x="384" y="508" width="56" height="26" rx="13"/>
+  <text class="chip-t" x="412" y="526" text-anchor="middle">crypt</text>
+  <rect class="chip" x="452" y="508" width="52" height="26" rx="13"/>
+  <text class="chip-t" x="478" y="526" text-anchor="middle">nas</text>
+  <rect class="chip" x="516" y="508" width="52" height="26" rx="13"/>
+  <text class="chip-t" x="542" y="526" text-anchor="middle">rlc</text>
+  <rect class="chip" x="580" y="508" width="52" height="26" rx="13"/>
+  <text class="chip-t" x="606" y="526" text-anchor="middle">rls</text>
+  <rect class="chip" x="644" y="508" width="52" height="26" rx="13"/>
+  <text class="chip-t" x="670" y="526" text-anchor="middle">rrc</text>
+  <rect class="chip" x="708" y="508" width="52" height="26" rx="13"/>
+  <text class="chip-t" x="734" y="526" text-anchor="middle">sctp</text>
+  <rect class="chip" x="772" y="508" width="52" height="26" rx="13"/>
+  <text class="chip-t" x="798" y="526" text-anchor="middle">udp</text>
+  <text class="desc" x="260" y="552">CLI · ASN.1 · 加密 · NAS · RLC · RRC · SCTP · UDP</text>
+
+  <!-- arrows row3 -> row4 -->
+  <path class="arrow" d="M250 568 V620" marker-end="url(#ar)"/>
+  <path class="arrow" d="M710 568 V620" marker-end="url(#ar)"/>
+  <path class="arrow" d="M1060 568 V620" marker-end="url(#ar)"/>
+
+  <!-- ④ 基础层 -->
+  <text class="layer" x="40" y="606">④ 基础层</text>
+
+  <rect class="focal" x="40" y="620" width="420" height="104" rx="12"/>
+  <text class="node" x="64" y="654" fill="#1A1759">utils · NTS</text>
+  <text class="desc-brand" x="64" y="678">任务 · 消息队列 · 定时器</text>
+  <text class="desc-brand" x="64" y="700">NtsMessage 是层间唯一通信方式</text>
+
+  <rect class="card" x="500" y="620" width="420" height="104" rx="12"/>
+  <text class="node" x="524" y="654">ext</text>
+  <text class="desc" x="524" y="678">spdlog · yaml-cpp</text>
+  <text class="desc" x="524" y="700">micro-ecc · compact25519 · crypt-ext · doctest</text>
+
+  <rect class="card" x="960" y="620" width="200" height="104" rx="12"/>
+  <text class="node" x="984" y="654">asn / asn1c</text>
+  <text class="desc" x="984" y="678">NGAP 16 MB</text>
+  <text class="desc" x="984" y="700">RRC 11 MB</text>
+
+  <text class="foot" x="40" y="762">箭头表示编译期依赖；运行时 gNB / UE 内部通过 NTS 消息协作 · 源码 4306 个文件 / 39 MB</text>
+</svg>
